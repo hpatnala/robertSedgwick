@@ -2,6 +2,7 @@ package com.sort.algo;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 public class ShellSort {
 	int[] array = new int[8];
@@ -34,18 +35,19 @@ public class ShellSort {
 	}
 	
 	private void println() {
-		for(int i=0;i<array.length;i++) {
-		}
+		System.out.println(Arrays.toString(array));
 	}
 	
 	private void sort(){
 		int N = array.length;
 		int h = 1;
-		while(h > N/3) h = 3*h+1;
+		while(h < N/3) {
+			h = 3*h+1;
+		}
 		
 		while( h > 0) {
 			for(int i=h;i<array.length;i++) {
-				for(int j=i;j >0;j--) {
+				for(int j=i;j >=h;j--) {
 					if(array[j] < array[j-h]) {
 						int temp = array[j-h];
 						array[j-h] = array[j];
