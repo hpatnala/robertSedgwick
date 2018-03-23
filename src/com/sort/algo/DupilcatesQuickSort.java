@@ -15,7 +15,6 @@ public class DupilcatesQuickSort {
 		if(a.length <1) {
 			throw new NullPointerException();
 		}
-		
 		if(hi<=lo) return;
 		int i=lo;
 		int lt=lo;
@@ -24,8 +23,10 @@ public class DupilcatesQuickSort {
 		while(gt>=i) {
 			if(a[i] <v) {
 				swap(a, lt++, i++);
+				System.out.println("Inside LT:" + Arrays.toString(a));
 			}else if(v < a[i]) {
 				swap(a, i, gt--);
+				System.out.println("Inside GT:" + Arrays.toString(a));
 			}else {
 				i++;
 			}
