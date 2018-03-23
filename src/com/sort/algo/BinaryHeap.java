@@ -2,7 +2,7 @@ package com.sort.algo;
 
 import java.util.Arrays;
 
-public class Heap {
+public class BinaryHeap {
 
 	public int[] getA() {
 		return a;
@@ -17,7 +17,7 @@ public class Heap {
 	
 	int count = 0;
 	public static void main(String[] args) {
-		Heap heap = new Heap();
+		BinaryHeap heap = new BinaryHeap();
 		heap.insert(2);
 		heap.insert(6);
 		heap.insert(5);
@@ -30,6 +30,12 @@ public class Heap {
 		System.out.println(heap.delMax());
 		System.out.println(heap.delMax());
 		System.out.println(heap.delMax());
+		System.out.println(heap.delMax());
+		System.out.println(heap.delMax());
+		System.out.println(heap.delMax());
+		System.out.println(heap.delMax());
+		System.out.println(heap.delMax());
+		
 	}
 	
 	private void swim(int k) {
@@ -55,11 +61,18 @@ public class Heap {
 		a[N+1] = 0;
 		return max;
 	}
+	
+	private int printOrder() {
+		int max = a[1];
+		exchange(1, N--);	
+		sink(1);
+		return max;
+	}
 
 	private void sink(int k) {	
 		while(2*k <= N) {
 			int j = 2*k;
-			if(j > N && less(j, j+1))
+			if(j < N && less(j, j+1))
 				j++;
 			if(!less(k, j)) 
 				break; 
