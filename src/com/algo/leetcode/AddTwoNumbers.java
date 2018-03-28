@@ -21,7 +21,7 @@ public class AddTwoNumbers {
 		//Load second list
 		ListNode l2 = new ListNode(5);
 		ListNode six = new ListNode(6);
-		ListNode fourtwo = new ListNode(7);
+		ListNode fourtwo = new ListNode(4);
 		l2.next = six;
 		six.next = fourtwo;
 		fourtwo.next = null;
@@ -30,6 +30,11 @@ public class AddTwoNumbers {
 		ListNode l3 = addTwoNumbers(l1, l2);
 		System.out.println();
 		print(l3);
+		
+		ListNode head = new ListNode(0);
+		addTwoNumbersRecursive(l1, l2, 0, head);
+		System.out.println();
+		print(head.next);
 	}
 	
 	private static void print(ListNode l3) {
@@ -65,4 +70,28 @@ public class AddTwoNumbers {
 		current.next = null;
 		return head.next;
     }
+	
+	public static void addTwoNumbersRecursive(ListNode l1, ListNode l2, int carryOn, ListNode head) {
+		int x = l1 != null? l1.val:0;
+		int y = l2 != null? l2.val:0;
+		int sum = x + y + carryOn;
+		carryOn = sum/10;
+		ListNode current = head;
+		current.next = new ListNode(sum%10);
+		current = current.next;
+		if(l1 != null) l1 = l1.next;
+		if(l2 != null) l2 = l2.next;		
+		if(l2 == null && l1 == null && carryOn >0) {
+			current.next = new ListNode(carryOn);
+			current = current.next;
+			current.next = null;
+			return;
+		}
+		if(l2 == null && l1 == null) {
+			current.next = null;
+			return;
+		}
+		addTwoNumbersRecursive(l1, l2, carryOn, current);
+		
+	}
 }
