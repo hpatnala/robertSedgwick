@@ -26,8 +26,8 @@ public class StackLinkedList {
 		sll.listPrint();
 		System.out.println("------------------------");
 		sll.reversePrint();
-		//System.out.println(sll.pop());
-		//System.out.println(sll.peek());
+		System.out.println(sll.pop());
+		System.out.println(sll.peek());
 	}
 	
 	public boolean isEmpty() {
