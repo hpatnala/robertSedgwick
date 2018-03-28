@@ -45,63 +45,24 @@ public class AddTwoNumbers {
 	
 	private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 		int carryOn = 0;
-		ListNode l3 = null;
-		ListNode current = null;
-		while(l1 != null && l2 != null) {
-			int sum = l1.val + l2.val;
-			if(carryOn > 0) {
-				sum = sum + carryOn;
-			}
-			if(sum > 9) {
-				carryOn = sum/10;
-				if(l3 == null) {
-					l3 = new ListNode(sum%10);
-					l3.next = null;
-					current = l3;
-				}else {
-					ListNode lfirst = new ListNode(sum%10);
-					current.next = lfirst;
-					lfirst.next = null;
-					current = lfirst;
-					
-				}
-			}else {
-				if(l3 == null) {
-					l3 = new ListNode(sum%10);
-					l3.next = null;
-					current = l3;
-				}else {
-					ListNode lfirst = new ListNode(sum%10);
-					current.next = lfirst;
-					lfirst.next = null;
-					current = lfirst;
-				}
-			}
-			l1 =  l1.next;
-			l2 = l2.next;
-			
+		ListNode head = new ListNode(0);
+		ListNode current = head;
+		ListNode p = l1; ListNode q = l2;
+		while(p != null || q != null) {
+			int x = p != null? p.val:0;
+			int y = q != null? q.val:0;
+			int sum = x + y + carryOn;
+			carryOn = sum/10;
+			current.next = new ListNode(sum%10);
+			current = current.next;
+			if(p != null) p = p.next;
+			if(q != null) q = q.next;
 		}
 		if(carryOn > 0) {
-			ListNode lfirst = new ListNode(carryOn);
-			current.next = lfirst;
-			lfirst.next = null;
-			current = lfirst;
+			current.next = new ListNode(carryOn);
+			current = current.next;
 		}
-		return l3;
+		current.next = null;
+		return head.next;
     }
-	
-	private static void loadToListNode(ListNode l3, int sum, ListNode current) {
-		if(l3 == null) {
-			l3 = new ListNode(sum%10);
-			l3.next = null;
-			current = l3;
-		}else {
-			ListNode lfirst = new ListNode(sum%10);
-			current.next = lfirst;
-			lfirst.next = null;
-			current = lfirst;
-			
-		}
-	}
-
 }
