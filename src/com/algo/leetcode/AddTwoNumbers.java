@@ -11,17 +11,17 @@ public class AddTwoNumbers {
 	
 	public static void main(String[] args) {
 		//Load first list
-		ListNode l1 = new ListNode(2);
+		ListNode l1 = new ListNode(8);
 		ListNode four = new ListNode(4);
-		ListNode three = new ListNode(3);
+	//	ListNode three = new ListNode(3);
 		l1.next = four;
-		four.next = three;
-		three.next = null;
+		four.next = null;
+	//	three.next = null;
 		print(l1);
 		//Load second list
 		ListNode l2 = new ListNode(5);
 		ListNode six = new ListNode(6);
-		ListNode fourtwo = new ListNode(4);
+		ListNode fourtwo = new ListNode(9);
 		l2.next = six;
 		six.next = fourtwo;
 		fourtwo.next = null;
@@ -72,11 +72,11 @@ public class AddTwoNumbers {
     }
 	
 	public static void addTwoNumbersRecursive(ListNode l1, ListNode l2, int carryOn, ListNode head) {
+		ListNode current = head;
 		int x = l1 != null? l1.val:0;
 		int y = l2 != null? l2.val:0;
 		int sum = x + y + carryOn;
-		carryOn = sum/10;
-		ListNode current = head;
+		carryOn = sum/10;	
 		current.next = new ListNode(sum%10);
 		current = current.next;
 		if(l1 != null) l1 = l1.next;

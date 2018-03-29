@@ -14,8 +14,8 @@ public class BinaryHeap {
 
 	int[] a = new int[9];
 	int N  = 0;
-	
 	int count = 0;
+	
 	public static void main(String[] args) {
 		BinaryHeap heap = new BinaryHeap();
 		heap.insert(2);
@@ -26,6 +26,9 @@ public class BinaryHeap {
 		heap.insert(3);
 		heap.insert(9);
 		heap.insert(8);
+	//	heap.insert(8);
+	//	heap.printOrder();
+		System.out.println();
 		System.out.println(Arrays.toString(heap.getA()));
 		System.out.println(heap.delMax());
 		System.out.println(heap.delMax());
@@ -35,7 +38,7 @@ public class BinaryHeap {
 		System.out.println(heap.delMax());
 		System.out.println(heap.delMax());
 		System.out.println(heap.delMax());
-		
+	//	System.out.println(heap.delMax());
 	}
 	
 	private void swim(int k) {
@@ -50,23 +53,41 @@ public class BinaryHeap {
 	}
 	
 	private void insert(int x) {
-		a[++N]  = x;
-		swim(N);
+		if(N < a.length-1) {
+			a[++N]  = x;
+			swim(N);
+		}else {
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	private int delMax() {
-		int max = a[1];
-		exchange(1, N--);	
-		sink(1);
-		a[N+1] = 0;
-		return max;
+		if(N>0) {
+			int max = a[1];
+			exchange(1, N--);	
+			sink(1);
+			a[N+1] = 0;
+			return max;
+		}else {
+			throw new IllegalArgumentException();
+		}
 	}
 	
-	private int printOrder() {
-		int max = a[1];
+	private void printOrder() {
+		if(N <= 0) {
+			N = 6; 
+			return;
+		}
+		
+		int max = a[1];		
 		exchange(1, N--);	
 		sink(1);
-		return max;
+		printOrder();
+		System.out.print(max);
+		if(N >1) {
+			System.out.print(",");
+		}
+		
 	}
 
 	private void sink(int k) {	
