@@ -75,7 +75,7 @@ public class BinaryHeap {
 	
 	private void printOrder() {
 		if(N <= 0) {
-			N = 6; 
+			N = a.length-1; 
 			return;
 		}
 		
