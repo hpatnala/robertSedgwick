@@ -58,6 +58,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
 	   @SuppressWarnings("hiding")
 	private class RandamizedIterator<Item> implements Iterator<Item>{
 			int tempCount = count;
+			int countOfItem = 0;
 		    @Override
 			public boolean hasNext() {
 				return tempCount != 0;
@@ -70,10 +71,8 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
 			@SuppressWarnings("unchecked")
 			@Override
 			public Item next() {	
-				if (tempCount == 0) {
-					throw new java.util.NoSuchElementException();
-				}
-				return (Item) listOfObjects[--tempCount];
+				tempCount--;
+				return (Item) listOfObjects[countOfItem++];				
 			} 
 	   }
 	
