@@ -25,14 +25,14 @@ public class BinarySearchTree {
 	public static void main(String[] args) {
 		BinarySearchTree bst = new BinarySearchTree();
 		bst.put('S', 2);
-		bst.put('R', 5);
-		bst.put('A', 1);
-		bst.put('B', 3);
-		bst.put('C', 6);
-		bst.put('E', 8);
-		bst.put('X', 9);
-		bst.put('Z', 4);
-		bst.put('B', 7);
+//		bst.put('R', 5);
+//		bst.put('A', 1);
+//		bst.put('B', 3);
+//		bst.put('C', 6);
+//		bst.put('E', 8);
+//		bst.put('X', 9);
+//		bst.put('Z', 4);
+//		bst.put('B', 7);
 		bst.print(bst.root);
 		
 		System.out.println("Floor: " + bst.floor('F'));
@@ -41,13 +41,17 @@ public class BinarySearchTree {
 		System.out.println("Rank: " + bst.rank('Y'));
 		System.out.println("Leaf Nodes: ");
 		bst.printLeaf(bst.root);
+		System.out.println("Range Count: " + bst.rangeCount('D', 'X'));
+		bst.rangeSearch(bst.root, 'D', 'Z');
+		System.out.println();
+		bst.rangeSearchOptimized(bst.root, 'B', 'X');
+		
 		System.out.println("In Order Nodes: ");
+		System.out.println("Height: " + heightOfTree(bst.root));
 		Iterator<Character> iterator = bst.keySet().iterator();
 		while(iterator.hasNext()) {
 			System.out.println(iterator.next());
-		}
-		
-		
+		}		
 	}
 	
 	public void print(Node x) {
@@ -95,6 +99,10 @@ public class BinarySearchTree {
 				return current.value;
 		}
 		return 0;
+	}
+	
+	public boolean contains(char key) {
+		return get(key) > 0;
 	}
 	
 	//FLOOR
@@ -174,5 +182,45 @@ public class BinarySearchTree {
 		}
 		printLeaf(x.left);
 		printLeaf(x.right);
+	}
+	
+	//Range Search 
+	public void rangeSearchOptimized(Node x, char lo, char hi) {
+		if(x==null) return;
+		if((int)x.key > hi && (int)x.key >lo)	return;
+		
+		if((int)x.key < (int)lo) {
+			rangeSearch(x.right, lo, hi);
+		}else if((int)x.key < hi) {
+			System.out.println(x.key);
+			rangeSearch(x.left, lo, hi);
+			rangeSearch(x.right, lo, hi);
+		}else if((int)x.key > (int)lo && (int)x.key < (int)hi) {
+			System.out.println(x.key);
+			rangeSearch(x.right, lo, hi);
+		}else if((int)x.key == (int)hi) {
+			System.out.println(x.key);
+		}
+	}
+	
+	public void rangeSearch(Node x, char lo, char hi) {
+		if(x==null) return;
+		if(((int)x.key > (int)lo && (int)x.key < (int)hi) || (int)x.key == hi) System.out.println(x.key);
+		rangeSearch(x.left, lo, hi);
+		rangeSearch(x.right, lo, hi);
+	}
+	
+	//Range Count
+	public int rangeCount(char lo, char hi) {
+		if(contains(hi)) 	
+			return rank(hi) - rank(lo) + 1;
+		else 
+			return rank(hi) - rank(lo);
+	}
+	
+	//Height of a tree
+	public static int heightOfTree(Node x) {
+		if(x == null) return 0;	
+		return Math.max(heightOfTree(x.right), heightOfTree(x.left))  + 1;
 	}
 }

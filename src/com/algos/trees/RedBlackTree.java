@@ -1,5 +1,7 @@
 package com.algos.trees;
 
+import com.algos.trees.BinarySearchTree.Node;
+
 public class RedBlackTree {
 
 	private static final boolean RED = true;
@@ -33,10 +35,19 @@ public class RedBlackTree {
 		rbTree.put('X', 9);
 		rbTree.put('Z', 4);
 		rbTree.put('B', 7);
+		
+		print(rbTree.root);
 	}
 	
 	public void put(char key, int value) {
 		root = put(root, key, value);
+	}
+	
+	public static void print(Node x) {
+		if(x== null) return;
+		System.out.println(x.key + " " + x.value);
+		print(x.right);
+		print(x.left);
 	}
 
 	private Node put(Node x, char key, int value) {
@@ -90,7 +101,7 @@ public class RedBlackTree {
 		h.left = x;
 		h.color = x.color;
 		x.color = RED;	
-		return x;
+		return h;
 	}
 
 	private boolean isRed(Node h) {	
