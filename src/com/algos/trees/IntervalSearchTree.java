@@ -26,7 +26,7 @@ public class IntervalSearchTree {
 	
 	public void put(int leftPt, int rightPt) {
 		root = put(root, leftPt, rightPt);
-//		getMaxEndPoint();
+		getMaxEndPt(root);
 	}
 
 	public Node put(Node x, int leftPt, int rightPt) {
@@ -34,20 +34,32 @@ public class IntervalSearchTree {
 		
 		if(x.leftkey < leftPt) {
 			x.right = put(x.right, leftPt, rightPt);
+		}	
+		if(x.leftkey > leftPt) {
+			x.left = put(x.left, leftPt, rightPt);
 		}
 		
-		//updating the max end point
 		int maxRight =0;
 		if(x.right != null) 	maxRight = x.right.rightval;
 		int maxLeft = 0;
 		if(x.left != null) 	maxLeft = x.left.rightval;	
-		x.maxEndPoint = Math.max(Math.max(maxRight, maxLeft), x.maxEndPoint);
-				
-		if(x.leftkey > leftPt) {
-			x.left = put(x.left, leftPt, rightPt);
-		}
-			
+		x.maxEndPoint = Math.max(Math.max(maxRight, maxLeft), x.maxEndPoint);						
+		
 		return x;
+	}
+	
+	public void getMaxEndPt(Node x) {
+		if(x == null) return;		
+		getMaxEndPt(x.right);
+		getMaxEndPt(x.left);
+		int maxRight =0;
+		if(x!= null) {
+			if(x.right != null) 	maxRight = x.right.rightval;
+			int maxLeft = 0;
+			if(x.left != null) 	maxLeft = x.left.rightval;	
+			x.maxEndPoint = Math.max(Math.max(maxRight, maxLeft), x.maxEndPoint);	
+		}
+		
 	}
 	
 	private void getMaxEndPoint() {
@@ -116,7 +128,7 @@ public class IntervalSearchTree {
 	public static void main(String[] args) {
 		IntervalSearchTree inSrchTree = new IntervalSearchTree();
 		inSrchTree.put(17, 19);
-		inSrchTree.put(21, 24);
+		inSrchTree.put(21, 20);
 		inSrchTree.put(5, 8);
 		inSrchTree.put(15, 18);
 		inSrchTree.put(4, 8);

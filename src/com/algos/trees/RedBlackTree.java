@@ -1,7 +1,5 @@
 package com.algos.trees;
 
-import com.algos.trees.BinarySearchTree.Node;
-
 public class RedBlackTree {
 
 	private static final boolean RED = true;

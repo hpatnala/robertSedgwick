@@ -32,8 +32,7 @@ public class Deque<Item> implements Iterable<Item> {
 		 }
 		 
 		 @SuppressWarnings("unchecked")
-		public Item next() {
-		
+		public Item next() {	
 			 if(head == null) {
 				 throw new java.util.NoSuchElementException();
 			 }	 
@@ -56,9 +55,9 @@ public class Deque<Item> implements Iterable<Item> {
 		System.out.println("remove last: "+deque.removeLast());
 		System.out.println("remove last: "+deque.removeLast());
 		System.out.println("remove first: "+deque.removeFirst());
-		System.out.println("remove last: "+deque.removeLast());
+		System.out.println("remove first: "+deque.removeLast());
+		System.out.println("remove first: "+deque.removeLast());
 		
-
 		
 		Iterator<String> iterator = deque.iterator();
 		while(iterator.hasNext()) {
@@ -67,7 +66,7 @@ public class Deque<Item> implements Iterable<Item> {
 	}
 	
 	public boolean isEmpty() {
-		return countOfObjects > 0;
+		return countOfObjects <= 0;
 	}
 	
 	public int size() {
@@ -122,8 +121,9 @@ public class Deque<Item> implements Iterable<Item> {
 			Node input = new Node(item);
 			Node tempTail = tail;
 			tail = input;
-			tempTail.next = tail;
 			tail.previous = tempTail;
+			if(tempTail != null)
+				tempTail.next = tail;		
 			countOfObjects++;
 		}
 	}
@@ -132,13 +132,17 @@ public class Deque<Item> implements Iterable<Item> {
 		if(head == null) {
 			throw new java.util.NoSuchElementException();
 		}
-		
-		Node temp = null;
 		if(head != null) {
+			Node temp = null;
 			temp = head;
 			head = head.next;
+			temp.next = null;
+			if (head != null)
+				head.previous = null;
+			countOfObjects--;
+			return temp.item;
 		}
-		return temp.item;
+		return null;
 	}
 	
 	public Item removeLast() {
@@ -149,11 +153,13 @@ public class Deque<Item> implements Iterable<Item> {
 	
 		if(tail != null) {
 			temp = tail;
-			if(tail.previous != null) {
-				tail = tail.previous;
-			}		
-			tail.next = null;
+			tail = tail.previous;
+			if(tail != null)
+				tail.next = null;
+			countOfObjects--;
+			temp.next = null;
+			return temp.item;
 		}
-		return temp.item;
+		return null;
 	}
 }

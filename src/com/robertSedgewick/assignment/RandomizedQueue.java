@@ -8,6 +8,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
 		
 		private Item[] listOfObjects;
 		private int count = 0;
+		
 		@SuppressWarnings("unchecked")
 		public RandomizedQueue() {
 			listOfObjects = (Item[]) new Object[20];
@@ -38,7 +39,9 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
 		   
 		   Item temp = null;
 		   if( listOfObjects.length >0) {
+			  
 			  temp = listOfObjects[StdRandom.uniform(count)];	 
+			  count++;
 		  }
 		  return temp;
 	   }
@@ -53,6 +56,15 @@ public class RandomizedQueue<Item> implements Iterable<Item>{
 			  temp = listOfObjects[StdRandom.uniform(count)];	  
 		   }
 		  return temp;
+	   }
+	   
+	   public boolean contains(Item ch) {
+		   for(int i=0;i < count; i++) {
+			   if(listOfObjects[i] == ch) {
+				   return true;
+			   }
+		   }
+		   return false;
 	   }
 	   
 	   @SuppressWarnings("hiding")
