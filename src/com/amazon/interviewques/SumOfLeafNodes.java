@@ -3,6 +3,7 @@ package com.amazon.interviewques;
 public class SumOfLeafNodes {
 	
 	private Node root;
+	private static int sum = 0;
 	
 	public class Node{
 		private char key;
@@ -28,10 +29,18 @@ public class SumOfLeafNodes {
 		return x;
 	}
 	
+	//My Method
 	public static int sumOfLeafNodes(Node x, int sum) {
 		if(x==null) return sum;
 		if(x.left == null && x.right == null) return sum + x.value;
 		return sumOfLeafNodes(x.left, sum) + sumOfLeafNodes(x.right, sum);
+	}
+	
+	//Dinesh method
+	public static void sumOfLeafNodes(Node x) {
+		if(x==null) return;
+		if(x.left == null && x.right == null) sum = sum + x.value;
+		sum = sumOfLeafNodes(x.left, sum) + sumOfLeafNodes(x.right, sum);
 	}
 	
 	private void print(Node x, String str) {
@@ -52,6 +61,8 @@ public class SumOfLeafNodes {
 		bst.put('Z', 4);
 		bst.print(bst.root, "root"); 
 		System.out.println("Sum Of Leaf Nodes: "+ sumOfLeafNodes(bst.root, 0)); //12
+		sumOfLeafNodes(bst.root);
+		System.out.println(sum);
 	}	
 
 }
