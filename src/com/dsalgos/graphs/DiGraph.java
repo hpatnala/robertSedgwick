@@ -1,7 +1,5 @@
 package com.dsalgos.graphs;
 
-import com.algos.trees.BinarySearchTree.Node;
-
 import edu.princeton.cs.algs4.Bag;
 
 public class DiGraph {
@@ -69,9 +67,6 @@ public class DiGraph {
 			}
 		}
 	}
-	
-	
-	
 	
 	public int maxDegree() {
 		int max = 0;
