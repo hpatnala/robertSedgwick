@@ -11,6 +11,7 @@ public class DirectedDFS {
 	//private final int s;
 	private int s;
 	private int count;
+	private Stack<Integer> reversePost;
 	
 	public DirectedDFS(DiGraph G, int s) {
 		this.V = G.V();
@@ -20,6 +21,31 @@ public class DirectedDFS {
 		dfs(G, s);
 	}
 	
+	public DirectedDFS(DiGraph G) {
+		this.V = G.V();
+		marked = new boolean[V];
+		edgeTo = new int[G.V()];
+		reversePost = new Stack<Integer>();
+		for(int v=0;v< G.V();v++) {
+			if(!marked[v]) depthFirstSearch(G, v);
+		}
+	}
+	
+	private void depthFirstSearch(DiGraph G, int v) {
+		marked[v] = true;
+		for(Integer w : G.adj(v)) {
+			if(!marked[w])	{
+				depthFirstSearch(G, w);
+				edgeTo[w] = v;
+			}
+		}
+		reversePost.push(v);
+	}
+	
+	public Iterable<Integer> reversePost(){
+		return reversePost;
+	}
+
 	//reachability from multiple sources	
 	public DirectedDFS(DiGraph G, Iterable<Integer> sources) {
 		this.V = G.V();
@@ -91,15 +117,23 @@ public class DirectedDFS {
 		graph.addEdge(6, 9);
 		graph.addEdge(7, 6);
 		int s = 0;
-		DirectedDFS dfs = new DirectedDFS(graph, s);
 		
+		DirectedDFS dfs = new DirectedDFS(graph);
+	//	DirectedDFS dfs = new DirectedDFS(graph, s);
+		
+		for(Integer e : dfs.reversePost()) {
+			System.out.println(e);
+		}
+		
+		System.out.println();
 		//print out vertices which are reachable from source
 		for(int i=0; i< graph.V();i++) {
 			if(dfs.hasPathTo(i)) System.out.print(i + " ");
 		}
+		
 		System.out.println();
 		for(int v=0;v< graph.V();v++) {
-			System.out.println(v + " to " + s);
+			System.out.print(v + " to " + s + " : ");
 			if(dfs.hasPathTo(v)) {
 				for(Integer u : dfs.pathTo(v)) {
 					if(u == s) System.out.print(u);
@@ -121,6 +155,8 @@ public class DirectedDFS {
 		for(int i=0; i< graph.V();i++) {
 			if(dfsMultiSources.hasPathTo(i)) System.out.print(i + " ");
 		}	
+		
+		
 	}
 
 }

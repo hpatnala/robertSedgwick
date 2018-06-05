@@ -1,5 +1,5 @@
 package com.sort.algo;
-
+//Max priority queue
 import java.util.Arrays;
 
 public class BinaryHeap {

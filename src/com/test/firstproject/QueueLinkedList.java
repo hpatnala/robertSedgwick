@@ -18,15 +18,35 @@ public class QueueLinkedList {
 		qll.enqueue(1);
 		qll.enqueue(3);
 		qll.enqueue(2);
-		qll.enqueue(7);
-		System.out.println(qll.dequeue());
-		System.out.println(qll.dequeue());
-		qll.enqueue(8);
-		qll.enqueue(6);
-		System.out.println(qll.dequeue());
-		System.out.println(qll.dequeue());
-		System.out.println(qll.dequeue());
-		System.out.println(qll.dequeue());
+		qll.enqueue(3);
+	//	System.out.println(qll.dequeue());
+	//	System.out.println(qll.dequeue());
+		qll.enqueue(3);
+		qll.enqueue(1);
+	//	System.out.println(qll.dequeue());
+	//	System.out.println(qll.dequeue());
+	//	System.out.println(qll.dequeue());
+	//	System.out.println(qll.dequeue());
+		Node current = qll.first;
+		Node last = qll.first;
+		boolean isPalindrom = false;
+		System.out.println(qll.palindrome(current, last, isPalindrom));
+		System.out.println(isPalindrom);
+	}
+	
+	public boolean palindrome(Node currFirst, Node lastNode, boolean isPalindrom) {
+		if(lastNode == null || currFirst == null) {
+			return false;
+		}
+		palindrome(currFirst, lastNode.next, isPalindrom);
+		if(currFirst.item == lastNode.item) {
+			currFirst =  currFirst.next;
+			return true;
+		}
+		else if(currFirst.item != lastNode.item) {
+			return false;
+		}
+		return false;
 	}
 	
 	private void enqueue(int a) {
