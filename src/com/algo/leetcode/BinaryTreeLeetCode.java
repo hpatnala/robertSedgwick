@@ -18,7 +18,7 @@ public class BinaryTreeLeetCode {
 	}
 		
 	private TreeNode put(TreeNode x, int value) {
-		if(x==null)	x = new TreeNode(value);	
+		if(x==null)	x = new TreeNode(value);		
 		else if(x.value > value)	x.left = put(x.left, value);
 		else if(x.value < value) x.right = put(x.right, value);
 		return x;
@@ -31,10 +31,19 @@ public class BinaryTreeLeetCode {
 		print(x.right, "right");
 	}
 	
-	private int sumOfLeftLeaves(TreeNode x) {
-		if(x == null) return 0;
-		if(x.left == null && x.right == null) return x.value;
-		return sumOfLeftLeaves(x.left);
+	//Sum of left leaves
+	private int sum;
+	private void inorder(TreeNode x) {
+		if(x==null) return;
+		inorder(x.left);
+		if(x.left != null && isLeaf(x.left)) sum = sum + x.left.value;
+		inorder(x.right);
+	}
+	
+	private boolean isLeaf(TreeNode x) {
+		if(x.right == null && x.left == null)
+			return true;
+		return false;
 	}
 
 	public static void main(String[] args) {
@@ -53,16 +62,17 @@ public class BinaryTreeLeetCode {
 		root.right.right = new TreeNode(7);
 		
 		bst.print(root, "root");
+		bst.inorder(root);
+		
 		System.out.println();
-		System.out.println(bst.sumOfLeftLeaves(root));
+		System.out.println("Sum of left node: " + bst.sum);
 		System.out.println();
 		
 		TreeNode t1 = new TreeNode(1);
 		t1.left = new TreeNode(3);
 		t1.right = new TreeNode(2);
 		t1.left.left = new TreeNode(8);
-		
-		
+			
 		TreeNode t2 = new TreeNode(2);
 		t2.left = new TreeNode(1);
 		t2.right = new TreeNode(4);
