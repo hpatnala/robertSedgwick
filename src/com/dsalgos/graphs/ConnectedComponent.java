@@ -26,6 +26,10 @@ public class ConnectedComponent {
 		return id[v];
 	}
 	
+	public boolean sameComponent(int v, int u) {
+		return id[v] == id[u];
+	}
+	
 	private void dfs(Graph g, int v) {
 		marked[v] = true;
 		id[v] = count;

@@ -1,14 +1,15 @@
 package com.algos.trees;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-
-import com.algos.trees.BinarySearchTree.Node;
+import java.util.Set;
 import com.robertSedgewick.assignment.Deque;
 import com.robertSedgewick.assignment.RandomizedQueue;
 
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.Stack;
 
 public class BinarySearchTree {
 	
@@ -53,14 +54,39 @@ public class BinarySearchTree {
 		bst.print(bst.root); 
 		
 		BinarySearchTree bstSub = new BinarySearchTree();
-		bstSub.put('R', 5);
+		bstSub.put('R', 7);
 		bstSub.put('B', 3);
-		bstSub.put('X', 1);	
-		bstSub.put('S', 2);
+		bstSub.put('X', 10);	
+		bstSub.put('S', 8);
 		bstSub.put('C', 6);
-		
+		bstSub.put('A', 2);
 		System.out.println("BST SUB: ");
 		bstSub.print(bstSub.root);
+		System.out.println("level Order Bottom");
+		System.out.println(bstSub.levelOrderBottom(bstSub.root).toString());	
+		System.out.println("Diameter Of Binary Tree");
+		System.out.println(bstSub.diameterOfBinaryTree(bstSub.root));
+//		System.out.println("convert bst");
+	//	bstSub.convertBST(bstSub.root);
+		System.out.println();
+		bstSub.convertBSTTraversal(bstSub.root);
+		bstSub.print(bstSub.root);
+		System.out.println();
+		bstSub.invertTree(bstSub.root);
+		bstSub.print(bstSub.root);
+		System.out.println("While");
+		bstSub.inverTreeWhile(bstSub.root);
+		bstSub.print(bstSub.root);
+		System.out.println("Find Target Test - MA");
+		System.out.println(bstSub.findTargetTest(bstSub.root, 5));
+		System.out.println("Find Target - MA");
+		System.out.println(bstSub.findTargetNrml(bstSub.root, 5));
+		System.out.println();
+		System.out.println("Find Target");
+		System.out.println(bstSub.findTarget(bstSub.root, 5));
+		System.out.println("Tree to String");
+		System.out.println(bstSub.tree2str(bstSub.root));
+		System.out.println();
 		
 		System.out.println("Floor: " + bst.floor('F'));
 		System.out.println("Ceiling: " + bst.ceiling('Y'));
@@ -87,6 +113,7 @@ public class BinarySearchTree {
 		System.out.println("Nodes: ");
 		System.out.println(bst.sumOfTree(bst.root));
 		System.out.println("Sum of Leaf Nodes: " + bst.sumOfLeafNodes(bst.root, 0));
+		
 		Iterator<Character> iterator = bst.keySet().iterator();
 		while(iterator.hasNext()) {
 			System.out.println(iterator.next());
@@ -317,6 +344,13 @@ public class BinarySearchTree {
 	 * 				E
 	 */
 	
+	/**
+	 * 
+	 * 				6
+	 * 		4			7
+	 * 3			5			8
+	 */
+	
 	
 	public void breadthFirstSearchQueue(Node current, Queue<Node> que) {
 		if(que.isEmpty()) return;
@@ -463,5 +497,209 @@ public class BinarySearchTree {
 		
 	}
 	
+	public Node invertTree(Node x) {
+ 		if(x == null) return x;
+		Node right = invertTree(x.right);
+		Node left = invertTree(x.left);
+		x.left = right;
+		x.right = left;
+		return x;
+	}	
 	
+	public Node inverTreeWhile(Node x) {
+		if(x == null) return x;
+		Queue<Node> que = new Queue<Node>();
+		que.enqueue(x);
+		Node current = null;
+		while(!que.isEmpty()) {
+			current = que.dequeue();
+			Node temp = current.right;
+			current.right = current.left;
+			current.left = temp;
+			if(current.right != null)	que.enqueue(current.right);
+			if(current.left != null)		que.enqueue(current.left);
+		}
+		return x;
+	}
+	
+	
+	//My Attempts Begin
+	boolean isExist = false;
+	boolean isExists = false;
+	public boolean findTargetNrml(Node x, int k) {
+		if(x == null) return isExist;
+		if(k<0) {k = k+x.value;return findTargetNrml(x.left, k);}
+		if(k==0) {isExist = true;return isExist;}
+		findTargetNrml(x.left, k);
+		int y = x.value;
+		k = k-y;
+		System.out.println(k);
+		findTargetNrml(x.right, k);
+		return isExist;
+	}
+	
+	public boolean findTargetTest(Node x, int k) {
+		if(x == null) return isExists;
+		findTargetTest(x.left, k);
+		
+		findTargetTest(x.right, k);	
+		int val = x.value;
+		System.out.println("Left: " + val);
+		k = k - val;
+		return isExists;
+	}	
+	//My Attempts End
+	
+	public boolean findTarget(Node x, int k) {
+		Set<Integer> set = new HashSet<Integer>();
+		return find(x, k, set);
+	}
+
+	private boolean find(Node x, int k, Set<Integer> set) {
+		if(x == null)	return false;
+		if(set.contains(k - x.value))	return true;
+		set.add(x.value);
+		System.out.println(set.toString());
+		return find(x.left, k, set) || find(x.right, k, set);
+	}
+	
+	public String tree2str(Node x) {
+		StringBuilder str = new StringBuilder();
+		StringBuilder str1 = new StringBuilder();
+		tree2str(x, str1);
+		String str2 = str1.toString();
+		System.out.println("Before: " + str2);
+		for(int i=0;i<str2.length();i++) {
+			if(i < str2.length()-1 && (str2.charAt(i) == '(' && str2.charAt(i+1) == ')')) {
+				i =i+1;
+				continue;
+			}else {
+				str.append(str2.charAt(i));
+			}
+		}
+		return str.toString();	
+	}
+
+	private void tree2str(Node x, StringBuilder str) {
+		if(x == null) {str.append("(").append(")");return;}
+		str.append(x.value);
+		str.append("(");
+		tree2str(x.left, str);
+		tree2str(x.right, str);
+		str.append(")");
+	}
+	
+	//My Attempts
+	public Node convertBST(Node x) {
+		if(x == null) return x;	
+		Node right = convertBST(x.right);
+		Node left = convertBST(x.left);
+		int leftval = left != null?left.value:0;
+		int rightval = right != null?right.value:0;
+		int curr = x.value;
+		if(left != null) left.value = leftval + curr + rightval;
+		x.value = curr + rightval;
+		return x;
+	}
+	
+	public Node convertBstQueue(Node x) {
+		if(x == null) return x;
+		Queue<Node> que = new Queue<Node>();
+		que.enqueue(x);
+		while(!que.isEmpty()) {
+			Node current = que.dequeue();
+			if(current != null) {
+				int left = current.left != null?current.left.value:0;
+				int right = current.right != null?current.right.value:0;
+				if(current.left != null) {que.enqueue(current.left);current.left.value = left + current.value + right; }
+				current.value = current.value + right;	
+				que.enqueue(current.right);
+			}
+		}
+		return x;
+	}
+	//
+	private int sum;
+	public Node convertBSTTraversal(Node x) {
+		if(x != null) {
+			convertBSTTraversal(x.right);
+			sum = sum + x.value;
+			x.value = sum;
+			convertBSTTraversal(x.right);
+		}
+		return x;
+	}
+	
+	public Node convertBSTStack(Node x) {
+		if(x != null) {
+			convertBSTTraversal(x.right);
+			sum = sum + x.value;
+			x.value = sum;
+			convertBSTTraversal(x.right);
+		}
+		return x;
+	}
+	
+	public List<List<Integer>> levelOrderBottom(Node x) {
+		if(x == null) return null;
+        Queue<Node> que = new Queue<Node>();
+        Stack<List<Integer>> stackOfEle = new Stack<List<Integer>>();
+        List<List<Integer>> listOfEle = new ArrayList<List<Integer>>();
+        que.enqueue(x);
+        List<Integer> list1 = new ArrayList<Integer>();
+        list1.add(x.value);
+        stackOfEle.push(list1);
+        while(!que.isEmpty()) {
+        		int count = que.size();
+        		List<Integer> list = new ArrayList<Integer>();
+        		while(count-- > 0) {
+        			Node curr = que.dequeue();
+        			if(curr.left != null) {
+        				list.add(curr.left.value);
+        				que.enqueue(curr.left);
+        			}
+        			if(curr.right != null) {
+        				list.add(curr.right.value);
+        				que.enqueue(curr.right);
+        			}
+        		}
+        		stackOfEle.push(list);
+        }
+        
+        for(List<Integer> list : stackOfEle) {
+        		listOfEle.add(list);
+        }
+        return listOfEle;
+    }
+	private int ans = 0;
+	//My Attempt
+	public int diameterOfBinaryTree(Node x) {
+	    List<Integer> list = new ArrayList<Integer>();
+	    int max = 0;
+	    diameterOfBinaryTree(x, list, max);
+	    depth(x);
+	    return ans -1;
+	}
+
+	private int diameterOfBinaryTree(Node x, List<Integer> list, int max) {
+		if(x == null) return max;	
+		diameterOfBinaryTree(x.left, list, max);
+		list.add(x.value);
+		diameterOfBinaryTree(x.right, list, max);	
+		if((list.size()-1) > max) {max = list.size()-1;}
+		return max;
+	}
+	//
+	private int depth(Node x) {
+		if(x == null) return 0;
+		int L = depth(x.left);
+		int R = depth(x.right);
+		ans = Math.max(ans, L + R + 1);
+		return Math.max(L, R) + 1;
+	}
+	
+	public Node sortedArrayToBST(int[] nums) {
+		
+		return root;     
+    }
 }
