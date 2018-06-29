@@ -3,7 +3,7 @@ package com.test.firstproject;
 
 import java.util.Iterator;
 
-public class ArrayImplementation implements Iterator {
+public class ArrayImplementation implements Iterator<Object> {
 	static int[] drs = new int[6];
 	static int count = 1;
 	

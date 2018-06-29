@@ -16,7 +16,7 @@ public class DjikstraTwoStackAlgo {
 	int operatorCount = 0;
 	
 	public static void main(String[] args) { 
-		String expression = "( ( ( 4 * ( 2 + 3 ) )  - 5 ) / 5 )";
+		String expression = "( ( 7 - ( ( 4 * ( 2 + 3 ) )  - 5 ) ) / 2 )";
 		DjikstraTwoStackAlgo twoStack = new DjikstraTwoStackAlgo();		
 		try {
 			System.out.println(twoStack.evaluateDjikstra(expression));

@@ -23,6 +23,9 @@ public class StackLinkedList {
 		sll.push(3);
 		sll.push(2);
 		sll.push(7);
+		sll.listPrint();
+		System.out.println("------------------------");
+		sll.reversePrint();
 		System.out.println(sll.pop());
 		System.out.println(sll.peek());
 	}
@@ -54,5 +57,26 @@ public class StackLinkedList {
 			return 0;
 		}
 	}
-
+	
+	public void listPrint() {
+		Node current = first;
+		print(current);	
+	}
+	
+	public void reversePrint() {
+		Node current = first;
+		reversePrint(current);
+	}
+	
+	private void print(Node n) {
+		if(n == null) return;
+		System.out.println(n.item);
+		print(n.next);
+	}
+	
+	private void reversePrint(Node n) {
+		if(n == null) return;
+		reversePrint(n.next);
+		System.out.println(n.item);
+	}
 }
