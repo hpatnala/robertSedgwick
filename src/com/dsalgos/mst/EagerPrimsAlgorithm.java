@@ -1,16 +1,16 @@
 package com.dsalgos.mst;
 
-import com.dsalgos.mst.helper.MinPriorityQueue;
+//import com.dsalgos.mst.helper.MinPriorityQueue;
 
-import edu.princeton.cs.algs4.Queue;
+//import edu.princeton.cs.algs4.Queue;
 
 public class EagerPrimsAlgorithm {
 	
-	private Queue<Edge> mst = new Queue<Edge>();
-	private MinPriorityQueue<Edge> pq;
+//	private Queue<Edge> mst = new Queue<Edge>();
+//	private MinPriorityQueue<Edge> pq;
 	
 	public EagerPrimsAlgorithm(EdgeWeightedGraph G) {
-		pq = new MinPriorityQueue<Edge>(G.V());
+	//	pq = new MinPriorityQueue<Edge>(G.V());
 		
 	}
 	

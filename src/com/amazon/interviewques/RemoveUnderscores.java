@@ -18,13 +18,13 @@ public class RemoveUnderscores {
 	}
 	
 	//similar to quick sort
-	public static void removeUnderScoresInArrayWithoutDS(int[] arr, int lo, int hi) {
+	public static void removeUnderScoresInArrayWithoutDS(char[] arr, int lo, int hi) {
 		if(hi<=lo) return;
 		removeUnderScoresInArray(arr, lo, hi);
 		System.out.println(Arrays.toString(arr));
 	}
 	
-	private static int removeUnderScoresInArray(int[] arr, int lo, int hi) {
+	private static int removeUnderScoresInArray(char[] arr, int lo, int hi) {
 		int i= lo;
 		int j= hi;
 		while(true) {
@@ -38,11 +38,6 @@ public class RemoveUnderscores {
 			swap(arr, i, j);
 		}	
 		return i;
-	}
-	
-	private static void swap(int[] arr, int i, int j) {
-		arr[i]=arr[j];
-		arr[j]='_';
 	}
 	
 	//without using extra data structure
@@ -62,10 +57,10 @@ public class RemoveUnderscores {
 	}
 	
 	public static void main(String[] args) {
-		int[] arr = {2, '_', 3,'_', 7, 8, '_', '_', 8, 9, '_' };
-		char[] charArr =  {'2', '_', '3','_', '7', '8', '_', '_', '8', '9', '_' };
+		int[] arr = {2, '_', 3,'_', 7, 8, '_', '_', '_', '_', '_' };
+		char[] charArr =  {'2', '_', '3','_', '7', '_', '_', '_', '_', '_', '_' };
 		removeUnderScoresInArrayWithDS(arr);
-		removeUnderScoresInArrayWithoutDS(arr, 0, arr.length-1);
+		removeUnderScoresInArrayWithoutDS(charArr, 0, charArr.length-1);
 		removeUnderScoresInArrayWithoutDSSingleFor(charArr);
 	}
 

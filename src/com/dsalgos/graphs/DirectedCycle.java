@@ -22,7 +22,7 @@ public class DirectedCycle {
 	private void dfs(DiGraph g, int v) {
 		onStack[v] = true;
 		marked[v] = true;
-		for(int w : g.adj(v)) {
+		for(int w : g.adj(v)) { //v= 3 // w = 5
 			if(cycle != null) return;
 			
 			if(!marked[w]) {				
@@ -30,7 +30,7 @@ public class DirectedCycle {
 				dfs(g, w);
 			}
 			
-			else if(onStack[v]) {
+			else if(onStack[w]) {
 				cycle = new Stack<Integer>();
 				for(Integer x=v;x!=w;x=edgeTo[x]) {
 					cycle.push(x);

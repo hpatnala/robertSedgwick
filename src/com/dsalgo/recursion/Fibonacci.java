@@ -1,5 +1,8 @@
 package com.dsalgo.recursion;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Fibonacci {
 	private int a;
 	private int b;
@@ -9,12 +12,16 @@ public class Fibonacci {
 		fib.setA(0);
 		fib.setB(1);
 		System.out.print(fib.getA() + " ");
-		fib.fibonacci(10);
+		fib.fibonacci(20);
+		System.out.println();
 		System.out.println();
 		System.out.println(fib(1));
 		System.out.println(fib(2));
 		System.out.println(fib(3));
 		System.out.println(fib(4));
+		System.out.println();
+		System.out.println(fibonacci1(10));
+		
 	}
 	
 	private int getA() {
@@ -46,6 +53,21 @@ public class Fibonacci {
 			return n;
 		}
 		return fib(n-1) + fib(n-2);
+	}
+	
+	public static int fibonacci1(int n) {
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		return fibonacci(n, map);
+	}
+	
+	private static int fibonacci(int n, Map<Integer, Integer> map) {
+		if(n == 0 || n==1) {
+			return n;
+		}
+		else if(!map.containsKey(n)) {
+			map.put(n, fibonacci(n-1, map) + fibonacci(n-2, map));
+		}
+		return map.get(n);
 	}
 
 }

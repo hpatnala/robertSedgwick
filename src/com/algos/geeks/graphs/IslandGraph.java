@@ -40,7 +40,7 @@ public class IslandGraph {
 		int[][] mat = {{1, 1, 0, 0, 0},
                 		   {0, 1, 0, 0, 1},
                 		   {1, 0, 0, 1, 1},
-                		   {0, 0, 0, 0, 0},
+                		   {1, 0, 0, 0, 0},
                 		   {1, 0, 1, 0, 1}};
 		findIslands(mat);
 		System.out.println("Number of islands: " + countOfIslands());

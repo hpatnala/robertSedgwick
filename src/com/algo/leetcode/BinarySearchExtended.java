@@ -2,6 +2,7 @@ package com.algo.leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.princeton.cs.algs4.Queue;
@@ -15,9 +16,9 @@ public class BinarySearchExtended {
 		private Node right;
 		private int count;
 		
-		public Node(int value, int count) {
+		public Node(int value, int depth) {
 			this.value = value;
-			this.count = count;
+			this.count = depth;
 		}
 	}
 	
@@ -132,7 +133,6 @@ public class BinarySearchExtended {
 		}
 	}
 	
-	
 	public List<String> binaryTreePaths(Node x) {
 	   if(x == null) return null;
 	   List<String> list = new ArrayList<String>();
@@ -228,7 +228,7 @@ public class BinarySearchExtended {
 
 	//My Attempt
 	private int count = 0;
-	private void binaryTreePaths(Node x, StringBuilder str, List<String> list){
+	public void binaryTreePaths(Node x, StringBuilder str, List<String> list){
 		if(x == null) return;
 		str.append(x.value);
 		count++;
@@ -301,6 +301,38 @@ public class BinarySearchExtended {
 		}
 	}
 	
+	public Node addOneRow(Node root, int v, int d) {
+        Queue<Node> que = new Queue<Node>();
+        que.enqueue(root);
+        int dOfPrnt = 0;
+        Node rootNode = null;
+        if(d == 1) {
+        		Node tempRoot = new Node(v, 1);
+        		tempRoot.left = root;
+        		return tempRoot;
+        }
+        while(!que.isEmpty()) {
+        		int count = que.size();
+        		while(count-- >0) {
+        			rootNode = que.dequeue();
+        			if(rootNode.left != null)	que.enqueue(rootNode.left);
+        			if(rootNode.right != null)	que.enqueue(rootNode.right);
+        		}
+        		++dOfPrnt;
+        		if(dOfPrnt == d-2)	break;    		
+        }
+        if(!que.isEmpty()) {
+        		Node node = que.dequeue();
+	        Node tempLeft = node.left;
+	        Node tempRight = node.right;
+	        node.left = new Node(v, 1);
+	        node.right = new Node(v, 1);
+	        node.left.left = tempLeft;
+	        node.right.right = tempRight;
+        }
+        return root;
+    }
+	
 	public int minDepth(Node x) {
 		if(x == null) return 0;
         return Math.min(minDepth(x.left), minDepth(x.right)) + 1;
@@ -315,12 +347,16 @@ public class BinarySearchExtended {
 		bst.print(bst.constructMaximumBinaryTree(nums1));
 		bst.put(5);
 		bst.put(3);
-		bst.put(4);
-		bst.put(1);	
+		bst.put(10);
+		bst.put(4);	
 		bst.put(2);	
 		bst.put(6);
 		bst.put(7);
 		bst.put(8);
+		bst.addOneRow(bst.root, 1, 4);
+		System.out.println("Add one row");
+		bst.print(bst.root);
+		
 		BinarySearchExtended bstSub = new BinarySearchExtended();
 		bstSub.put(3);
 		bstSub.put(4);

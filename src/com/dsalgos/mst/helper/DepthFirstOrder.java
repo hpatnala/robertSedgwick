@@ -44,7 +44,7 @@ public class DepthFirstOrder {
 		post[v] = postCounter++;
 	}
 	
-	private void dfs(DiGraph G, int v) {
+	public void dfs(DiGraph G, int v) {
 		marked[v] = true;
 		preOrder.enqueue(v);
 		pre[v] = preCounter++;
