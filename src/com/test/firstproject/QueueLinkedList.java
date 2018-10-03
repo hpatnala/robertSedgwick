@@ -2,11 +2,11 @@
 package com.test.firstproject;
 
 public class QueueLinkedList {
-	Node first = null;
-	Node last = null;
+	public Node first = null;
+	public Node last = null;
 	public class Node{
-		int item;
-		Node next;
+		public int item;
+		public Node next;
 		
 		public Node(int input) {
 			item = input;
@@ -49,7 +49,7 @@ public class QueueLinkedList {
 		return false;
 	}
 	
-	private void enqueue(int a) {
+	public void enqueue(int a) {
 		if(first == null) {
 			first = new Node(a);
 			first.next = null;

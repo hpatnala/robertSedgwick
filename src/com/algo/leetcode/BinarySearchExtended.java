@@ -2,7 +2,6 @@ package com.algo.leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import edu.princeton.cs.algs4.Queue;
@@ -11,10 +10,10 @@ public class BinarySearchExtended {
 	Node root = null;
 	
 	public class Node {
-		private int value;
+		public int value;
 		public Node left;
-		private Node right;
-		private int count;
+		public Node right;
+		public int count;
 		
 		public Node(int value, int depth) {
 			this.value = value;
@@ -51,10 +50,10 @@ public class BinarySearchExtended {
 	
 	public Node put2(Node x, int value) {
 		if(x== null) return new Node(value, 1);
-		else if((int)value <= (int)x.value) 
-			x.left = put2(x.left, value);
-		else if((int)value >= (int)x.value) 
+		else if((int) value <= (int)x.value) 
 			x.right = put2(x.right, value);
+		else if((int) value >= (int)x.value) 
+			x.left = put2(x.left, value);
 		x.count = 1 + size(x.right) + size(x.left);//root + right sub tree + left sub tree
 		return x;
 	}
@@ -337,6 +336,74 @@ public class BinarySearchExtended {
 		if(x == null) return 0;
         return Math.min(minDepth(x.left), minDepth(x.right)) + 1;
     }
+	
+	public int houseRobber(Node x) {
+		if(x == null) return 0;
+		Queue<Node> que = new Queue<Node>();
+		int odd = 0;
+		int even = 0;
+		int level = 1;
+		que.enqueue(x);
+		while(!que.isEmpty()) {
+			int count = que.size(); //2 //2
+			while(count-- >0) { //1 //0 //1 //0
+				Node t = que.dequeue();
+				if(level % 2 == 1) 	odd +=t.value; //3 //6 //7
+				else 	even += t.value; //2 //5
+				if(t.left != null)	que.enqueue(t.left);
+				if(t.right != null)	que.enqueue(t.right);
+			}
+			level++; //2 //3
+		}
+		System.out.println(level);
+		return Math.max(odd, even);
+	}
+	
+	public int rob(Node root) {
+        return Math.max(vals(root)[0], vals(root)[1]);
+    }
+    public int[] vals(Node root){
+        if(root== null){
+            return new int[]{0,0};
+        }
+        else{
+            int[] left = vals(root.left);
+            int[] right = vals(root.right);
+            int excl = left[0] + right[0];
+            int incl = Math.max(excl, left[1] + right[1] + root.value);
+            return new int[]{incl,excl};
+        }
+    }
+    
+    public int rob1(Node root) {
+        int[] res = robSub(root);
+        return Math.max(res[0], res[1]);
+    }
+
+    private int[] robSub(Node root) {
+        if (root == null) return new int[2];
+        
+        int[] left = robSub(root.left);
+        System.out.println("left: " + Arrays.toString(left));
+        int[] right = robSub(root.right);
+        System.out.println("right: " + Arrays.toString(right));
+        int[] res = new int[2];
+        
+        res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        res[1] = root.value + left[0] + right[0]; 
+        System.out.println("res: " + Arrays.toString(res));
+        return res;
+    }
+    
+    
+	
+
+	/**
+	 * 			5
+	 * 		3		7
+	 * 	 2	  4	 6     8
+	 * 
+	 */
 
 	public static void main(String[] args) {
 		BinarySearchExtended bst = new BinarySearchExtended();
@@ -347,12 +414,16 @@ public class BinarySearchExtended {
 		bst.print(bst.constructMaximumBinaryTree(nums1));
 		bst.put(5);
 		bst.put(3);
-		bst.put(10);
+	//	bst.put(10);
 		bst.put(4);	
 		bst.put(2);	
 		bst.put(6);
 		bst.put(7);
-		bst.put(8);
+	//	bst.put(8);
+		System.out.println("House Robbery");
+	 	System.out.println("Hello " + bst.houseRobber(bst.root));
+		System.out.println(bst.rob(bst.root));
+		System.out.println(bst.rob1(bst.root));
 		bst.addOneRow(bst.root, 1, 4);
 		System.out.println("Add one row");
 		bst.print(bst.root);

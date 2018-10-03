@@ -14,6 +14,8 @@ public class BellNumbers {
 	}
 	
 	public long findBellNum(int n) {	
+		if(n==0)
+			return 1;
 		for(int i=1;i<n;i++) {
 			B[i][0] = prev;
 			findBell(i, 1);
@@ -34,7 +36,7 @@ public class BellNumbers {
 	
 	public static void main(String[] args) {
 		BellNumbers bellN = new BellNumbers();
-		System.out.println(bellN.findBellNum(5));
+		System.out.println(bellN.findBellNum(2));
 	}
 
 }
